@@ -1,0 +1,145 @@
+<!doctype html>
+
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+
+		<title>AJAX/PHP/CURL/JSON example</title>
+		<meta name="description" content="AJAX/PHP/CURL/JSON example">
+		<meta name="author" content="Paddy Evans">
+		<style>
+			   table {
+ 				 font-family: arial, sans-serif;
+ 				 border-collapse: collapse;
+  				width: 100%;
+					}
+
+				td, th {
+				border: 1px solid #dddddd;
+				text-align: left;
+				padding: 8px;
+					}
+
+				tr:nth-child(even) {
+				background-color: #dddddd;
+					}
+				.noborder {
+					border-collapse: collapse;
+					}
+		</style>
+
+	</head>
+
+	<body>
+		<div id="divResults">
+			
+			<table>
+				<tr>
+					<td align="right">
+						API name 
+					</td>
+					<td>
+						API description
+					</td>
+					<td> </td>
+
+				</tr>
+
+				<tr>
+					<td align="right">
+						Name: Ocean Name
+					</td>
+					<td>
+						<select id="llat" name="lat">
+							<option value="40.78343">lat: 40.78343</option>
+							<option value="-8.783195">lat: -8.783195</option>
+						</select>
+						<select id="llng" name="lng">
+							<option value="-43.96625">lng: -43.96625</option>
+							<option value="-124.508523">lng: -124.508523</option>
+						</select>
+					</td>
+					<td><button id="btnRun">Submit</button></td>
+
+				</tr>
+
+				<tr>
+					<td align="right">
+						Name: Neighbourhood
+					</td>
+					<td>
+						<select id="lllat" name="lat">
+							<option value="40.78343">lat: 40.78343</option>
+							<option value="40.78341">lat: 40.78341</option>
+						</select>
+						<select id="lllng" name="lng">
+							<option value="-73.96625">lng: -73.96625</option>
+							<option value="-73.96621">lng: -73.96621</option>
+						</select>
+					</td>
+					<td><button id="btnRun1">Submit</button></td>
+
+				</tr>
+
+				<tr>
+					<td align="right">
+						Name: Children
+					</td>
+					<td>
+						<select id="ggid" name="gid">
+							<option value="3175395">gId: 3175395</option>
+							<option value="6269131">gId: 6269131</option>
+						</select>
+					</td>
+					<td><button id="btnRun2">Submit</button></td>
+
+				</tr>
+
+				<tr>
+					<td> Distance: <span id="geo1"></span>
+	
+					</td>
+					<td> GeoName Id: <span id="geo2"></span>
+
+					</td>	
+					<td> Name: <span id="geo3"></span>
+						
+					</td>	
+
+				</tr>
+				<tr>
+					<td> City: <span id="geo4"></span>
+	
+					</td>
+					<td> Country Code: <span id="geo5"></span>
+
+					</td>	
+					<td> Name: <span id="geo6"></span>
+						
+					</td>	
+
+				</tr>
+				<tr>
+					<td>Admin Name:<span id="geo7"></span></td>
+					
+					<td> Lng:
+						<span id="geo8"></span>
+					</td>	
+					<td> CountryId:
+						<span id="geo9"></span>
+					</td>	
+
+				</tr>
+			</table>
+
+		</div>
+
+		<script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
+		<script type="application/javascript" src="libs/js/script.js"></script>
+		<script type="application/javascript" src="libs/js/script1.js"></script>
+		<script type="application/javascript" src="libs/js/script2.js"></script>
+	</body>
+
+</html>
