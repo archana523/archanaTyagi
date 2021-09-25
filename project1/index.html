@@ -1,0 +1,58 @@
+<!doctype html>
+
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>GAZETTEER example</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="vendors/css/bootstrap.min.css">
+		<link rel="stylesheet" href="vendors/css/easy-button.css"/>
+		<link rel="stylesheet" href="vendors/css/leaflet.css"/>
+		<link rel="stylesheet" href="vendors/css/L.Control.Sidebar.css"/>
+		<link rel="stylesheet" href="libs/css/style.css"/>
+		<link rel="stylesheet" href="vendors/css/L.Control.Window.css"/>
+		<link rel="stylesheet" type="text/css" href="vendors/css/leaflet-openweathermap.css"/>
+		<link rel="stylesheet" href="vendors/css/Control.FullScreen.css"/>
+
+	</head>
+
+	<body>
+		<div id=”preloader”></div>
+		<div class="container-fluid text-center">
+				<h2 class="gaz">GAZETTEER</h2>
+				<select id="ccid" name="cid" aria-label="State" class="form-select" aria-label="Default select example">
+				</select>
+				<button id="submitWeather" class="btn btn-primary">Submit</button>
+			<div id="mapid">
+			</div>
+			<div id="sidebar">
+				<h4>Country Information</h4>
+				<h5>Capital: <span id="cap"></span></h5>
+				<h5>Region: <span id="reg"></span></h5>
+				<h5>Population: <span id="pop"></span></h5>
+				<h5>Native Name: <span id="nat"></span></h5>
+				<h5>Continent: <span id="con"></span></h5>
+				<h5>Currency: <span id="cur"></span></h5>
+				<h5>Currency Symbol: <span id="curs"></span></h5>
+				<h5>Area: <span id="area"></span></h5>
+				<h5>Language: <span id="lang"></span></h5>
+				<h5>Timezones: <span id="tim"></span></h5>
+				<h5>Flag: <a id="flag"></a></h5>
+			</div>
+		</div>
+		<script src="vendors/js/leaflet.js"></script>
+		<script src="vendors/js/leaflet-providers.js"></script>
+		<script src="vendors/js/easy-button.js"></script>
+		<script src="vendors/js/L.Control.Sidebar.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="vendors/js/bootstrap.min.js"></script>
+		<script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
+		<script type="application/javascript" src="libs/js/script.js"></script>
+		<script src="vendors/js/L.Control.Window.js"></script>
+		<script type="application/javascript" src="vendors/js/leaflet-openweathermap.js"></script>
+		<script src="vendors/js/Control.FullScreen.js"></script>
+	</body>
+
+</html>
