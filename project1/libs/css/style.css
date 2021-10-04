@@ -21,6 +21,7 @@
     -webkit-animation: animate-preloader 1s linear infinite;
     animation: animate-preloader 1s linear infinite;
 }
+
 @-webkit-keyframes animate-preloader {
     0% {
         -webkit-transform: rotate(0deg);
@@ -42,17 +43,22 @@
         transform: rotate(360deg);
     }
 }
-
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100vw;
+}
 #mapid { height: 510px; }
 #ccid { width: 250px; float: clear; display: inline}
 .gaz { background-color: rgb(117, 167, 241);}
 #sidebar {
     background-color: rgb(164, 197, 247);
 }
-
 @media only screen and (max-width: 760px), (min-width: 768px) and (max-width: 1024px) {
     #ccid {
         width: 180px;
     }
 }
-
