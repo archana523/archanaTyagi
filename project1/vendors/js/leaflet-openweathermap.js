@@ -1583,3 +1583,4 @@ var raincls = L.OWM.rainClassic({appId: '4a953b341d84c4765dfb3d2d76c96cfb'});
 var temp = L.OWM.temperature({appId: '4a953b341d84c4765dfb3d2d76c96cfb'});
 var wind = L.OWM.wind({appId: '4a953b341d84c4765dfb3d2d76c96cfb'});
 var snow = L.OWM.snow({appId: '4a953b341d84c4765dfb3d2d76c96cfb'});
+//var city = L.OWM.current({appId: '4a953b341d84c4765dfb3d2d76c96cfb'});
