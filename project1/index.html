@@ -5,7 +5,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>GAZETTEER example</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="vendors/css/bootstrap.min.css">
 		<link rel="stylesheet" href="vendors/css/easy-button.css"/>
@@ -15,7 +15,9 @@
 		<link rel="stylesheet" href="vendors/css/L.Control.Window.css"/>
 		<link rel="stylesheet" type="text/css" href="vendors/css/leaflet-openweathermap.css"/>
 		<link rel="stylesheet" href="vendors/css/Control.FullScreen.css"/>
-
+		<link rel="stylesheet" href="vendors/css/MarkerCluster.css"/>
+		<link rel="stylesheet" href="vendors/css/MarkerCluster.Default.css"/>
+		<link rel="stylesheet" href="vendors/css/leaflet.extra-markers.min.css"/>
 	</head>
 
 	<body>
@@ -33,14 +35,15 @@
 				<h5>Region: <span id="reg"></span></h5>
 				<h5>Population: <span id="pop"></span></h5>
 				<h5>Native Name: <span id="nat"></span></h5>
-				<h5>Continent: <span id="con"></span></h5>
+				<h5>Subregion: <span id="sub"></span></h5>
 				<h5>Currency: <span id="cur"></span></h5>
 				<h5>Currency Symbol: <span id="curs"></span></h5>
 				<h5>Area: <span id="area"></span></h5>
 				<h5>Language: <span id="lang"></span></h5>
 				<h5>Timezones: <span id="tim"></span></h5>
-				<h5>Flag: <a id="flag"></a></h5>
+				<h5>Flag: <span id="flag"></span></h5>
 			</div>
+			
 		</div>
 		<script src="vendors/js/leaflet.js"></script>
 		<script src="vendors/js/leaflet-providers.js"></script>
@@ -53,6 +56,8 @@
 		<script src="vendors/js/L.Control.Window.js"></script>
 		<script type="application/javascript" src="vendors/js/leaflet-openweathermap.js"></script>
 		<script src="vendors/js/Control.FullScreen.js"></script>
+		<script src="vendors/js/leaflet.markercluster.js"></script>
+		<script src="vendors/js/leaflet.extra-markers.min.js"></script>
 	</body>
 
 </html>
