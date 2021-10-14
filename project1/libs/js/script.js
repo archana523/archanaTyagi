@@ -18,6 +18,9 @@ var flag;
 var easy_button;
 var m;
 var markerCluster;
+var latlon;
+var m1;
+var name1;
 $(document).ready(function(){
 		//POPULATE COUNTRY IN DROPDOWN SELECT
 		$.ajax({
@@ -40,78 +43,7 @@ $(document).ready(function(){
 				console.log('error while selecting country from dropdown list');
 			}
 		});
-		//ADDING CITIES TO MAP
-		// var city;
-		// $.ajax({
-		// 	url: "libs/php/cities.php",
-		// 	type: 'POST',
-		// 	dataType: 'json',
-		// 	success: function(result) {
-		// 		//console.log(JSON.stringify(result));
-		// 		if(result.status.name == "ok") {
-		// 			for(var i=0; i<result.data.data.length; i++) {
-		// 				if(result.data.data[i].country === 'Iran'){
-		// 					city = result.data.data[i].cities;
-		// 				}
-		// 			} 
-		// 		}console.log(city);
-		// 	}
-		// });
-		//console.log(city);
-		//ADDING MARKER CLUSTERING OF COUNTRIES
-		// $.ajax({
-		// 	url: "libs/php/countryData.php",
-		// 	type: 'POST',
-		// 	dataType: 'json',
-		// 	success: function(result){
-		// 		//console.log(JSON.stringify(result));
-		// 		markerCluster = L.markerClusterGroup();
-		// 		var redMarker = L.ExtraMarkers.icon({
-		// 			icon: 'fa-map-marker',
-		// 			markerColor: 'red',
-		// 			shape: 'square',
-		// 			prefix: 'fa'
-		// 		  });
-		// 		if(result.status.name == "ok"){
-		// 			for(var i=0; i<result.data.length; i++){
-		// 				m = L.marker(result.data[i].latlng, {icon: redMarker}).bindPopup(result.data[i].name.official);
-		// 				markerCluster.addLayer(m);
-		// 				mymap.addLayer(markerCluster);
-		// 			}
-		// 		}
-		// 	},
-		// 	error: function(jqXHR, textStatus, errorThrown) {
-		// 		// your error code
-		// 		console.log('error applying clustering using countries data');
-		// 	}
-		// });
-
-		$.ajax({
-			url: "libs/php/airport.php",
-			type: 'POST',
-			dataType: 'json',
-			success: function(result){
-				//console.log(JSON.stringify(result));
-				markerCluster = L.markerClusterGroup();
-				var redMarker = L.ExtraMarkers.icon({
-					icon: 'fa-map-marker',
-					markerColor: 'red',
-					shape: 'square',
-					prefix: 'fa'
-				  });
-				if(result.status.name == "ok"){
-					for(var i=0; i<result.data.length; i++){
-						m = L.marker([result.data[i].lat, result.data[i].lon], {icon: redMarker}).bindPopup(result.data[i].name);
-						markerCluster.addLayer(m);
-						mymap.addLayer(markerCluster);
-					}
-				}
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				// your error code
-				console.log('error applying clustering using countries data');
-			}
-		});
+			
 			//PERMISSION FROM USER TO USE LOCATION
 		permission();
 		function permission() {
@@ -121,8 +53,58 @@ $(document).ready(function(){
 				navigator.geolocation.getCurrentPosition(function(position) {
 					lat = position.coords.latitude;
 					lng = position.coords.longitude;
-					//console.log(lat);
+					latlon = encodeURIComponent([position.coords.latitude, position.coords.longitude]);
+					console.log(latlon);
 					//console.log(lng);
+					//GETTING COUNTRY NAME BASED ON LAT AND LON
+					$.ajax({
+						url: "libs/php/geolocation.php",
+						type: 'POST',
+						dataType: 'json',
+						data: {
+							latlon: latlon
+						},
+						success: function(result) {
+							if(result.status.name == "ok") {
+								//console.log(JSON.stringify(result));
+								var cname = result.data[0].components.country;
+								console.log(cname);
+								$.ajax({
+									url: "libs/php/airport.php",
+									type: 'POST',
+									dataType: 'json',
+									success: function(result){
+										//console.log(JSON.stringify(result));
+										markerCluster = L.markerClusterGroup();
+										var redMarker = L.ExtraMarkers.icon({
+											icon: 'fa-map-marker',
+											markerColor: 'red',
+											shape: 'square',
+											prefix: 'fa'
+										  });
+										if(result.status.name == "ok"){
+											for(var i=0; i<result.data.length; i++){
+												if(result.data[i].country === cname) {
+													m = L.marker([result.data[i].lat, result.data[i].lon], {icon: redMarker}).bindPopup(result.data[i].name);
+													markerCluster.addLayer(m);
+													mymap.addLayer(markerCluster);
+												}
+												
+											}
+										}
+									},
+									error: function(jqXHR, textStatus, errorThrown) {
+										// your error code
+										console.log('error getting location');
+									}
+								});
+							}
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							// your error code
+							console.log('error applying clustering using countries data');
+						}
+					});
 				//GETTING CODE OF COUNTRY
 			  	$.ajax({
 				  url:"libs/php/geoNames.php",
@@ -173,7 +155,7 @@ $(document).ready(function(){
 									console.log('hey');
 								
 										mymap.setView(result['data']['latlng']);
-										var name1 = encodeURIComponent(result['data']['capital']);
+										name1 = encodeURIComponent(result['data']['capital']);
 										console.log(name1);
 										//console.log(name1);
 										$.ajax({
@@ -249,11 +231,11 @@ $(document).ready(function(){
 									for(var i=0; i<result.data.countryInfo.features.length; i++){
 										if(result.data.countryInfo.features[i].properties.iso_a2 === isoCode){
 										//console.log(result.data.countryInfo.features[i].properties.iso_a2);
-											if(polygon != null) {
-											mymap.removeLayer(polygon);
-											}
+											// if(polygon != null) {
+											// mymap.removeLayer(polygon);
+											// }
 											polygon = L.geoJSON(result.data.countryInfo.features[i]).addTo(mymap);
-											console.log(result.data.countryInfo.features[i]);
+											//console.log(result.data.countryInfo.features[i]);
 											mymap.fitBounds(polygon.getBounds());
 											};
 										};
@@ -268,7 +250,7 @@ $(document).ready(function(){
 					},
 				error: function(jqXHR, textStatus, errorThrown) {
 					// your error code
-					console.log('Polygon cant be loaded');
+					console.log('Geolocation error');
 				}
 			});
 				})
@@ -278,6 +260,63 @@ $(document).ready(function(){
 		
 	 //WHEN COUNTRY IS SELECTED FROM SELECT DROPDOWN
 	$('#submitWeather').click(function () {
+				var placename = encodeURIComponent($("#ccid option:selected").html());
+				console.log(placename);
+				if(m != null){
+							mymap.removeLayer(m);
+							markerCluster.removeLayer(m)
+							mymap.removeLayer(markerCluster);
+				}
+				$.ajax({
+					url: "libs/php/geolocationSearch.php",
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						placename: placename
+					},
+					success: function(result) {
+						if(result.status.name == "ok") {
+							console.log(JSON.stringify(result));
+							var cname = result.data[0].components.country;
+							console.log(cname);
+							$.ajax({
+								url: "libs/php/airport.php",
+								type: 'POST',
+								dataType: 'json',
+								success: function(result){
+									//console.log(JSON.stringify(result));
+									markerCluster = L.markerClusterGroup();
+									var redMarker = L.ExtraMarkers.icon({
+										icon: 'fa-map-marker',
+										markerColor: 'red',
+										shape: 'square',
+										prefix: 'fa'
+									});
+									if(result.status.name == "ok"){
+										for(var i=0; i<result.data.length; i++){
+											if(result.data[i].country === cname) {
+												
+												m = L.marker([result.data[i].lat, result.data[i].lon], {icon: redMarker}).bindPopup(result.data[i].name);
+												markerCluster.addLayer(m);
+												mymap.addLayer(markerCluster);
+											}
+											
+										}
+									}
+								},
+								error: function(jqXHR, textStatus, errorThrown) {
+									// your error code
+									console.log('error applying clustering using countries data');
+								}
+							});
+						}
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						// your error code
+						console.log('Geolocation error');
+					}
+				});
+				console.log($('#ccid').val());
 			$.ajax({
 			url: "libs/php/getCountryInfo1.php",
 			type: 'POST',
@@ -288,15 +327,15 @@ $(document).ready(function(){
 			cache: false,
 			success: function(result) {
 
-				console.log(JSON.stringify(result));
+				//console.log(JSON.stringify(result));
 
 				if (result.status.name == "ok") {
-					console.log("All recieved well.");
+					//console.log("All recieved well.");
 					code2 = result['data']['alpha2Code'];
-					console.log(result['data']['alpha2Code']);
+					//console.log(result['data']['alpha2Code']);
 	
 					//INFORMATION ABOUT COUNTRY
-					console.log('eey');
+					//console.log('eey');
 					$('#pop').html(result['data']['population']);
 					$('#cap').html(result['data']['capital']);
 					$('#reg').html(result['data']['region']);
@@ -310,14 +349,14 @@ $(document).ready(function(){
 					
 					flag = result['data']['flag'];
 					$('#flag').html(`<img src='${flag}' width="90" height="80">`);
-					console.log('hey');
+					//console.log('hey');
 					
 					mymap.setView(result['data']['latlng']);
 					
 					//ADDING MARKER TO MAP
 					var name2 = result['data']['capital'];
 					var name = encodeURIComponent(result['data']['capital']);
-					console.log(name);
+					//console.log(name);
 					$.ajax({
 						url: "libs/php/wikipedia.php",
 						type: 'POST',
@@ -353,7 +392,7 @@ $(document).ready(function(){
 							lon: result['data']['latlng'][1]
 							},
 							success: function(data1) {
-							console.log(JSON.stringify(data1));
+							//console.log(JSON.stringify(data1));
 								if (result.status.name == "ok"){
 									console.log(data1['data']['weather'][0]['description']);
 									if(popup != null) mymap.removeControl(easy_button);
@@ -402,7 +441,7 @@ $(document).ready(function(){
 			}
 		}); 
 	});
-	var mymap = L.map('mapid').fitWorld().locate({setView: true, maxZoom: 10});
+	var mymap = L.map('mapid').locate({setView: true, maxZoom: 19});
 	Esri_NatGeoWorldMap.addTo(mymap);
 
 	//ADDING SIDEBAR TO THE MAP
