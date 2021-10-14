@@ -7,7 +7,7 @@
 
 	$executionStartTime = microtime(true);
 
-	$url= 'https://api.opencagedata.com/geocode/v1/json?q='.$_REQUEST['latlon'].'&pretty=1&key=20095911a9c54477a48bed6c2078dfff';
+	$url= 'https://api.opencagedata.com/geocode/v1/json?q='.$_REQUEST['placename'].'&pretty=1&key=20095911a9c54477a48bed6c2078dfff';
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
