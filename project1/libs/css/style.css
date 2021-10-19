@@ -59,6 +59,7 @@ html, body, #map {
 }
 @media only screen and (max-width: 760px), (min-width: 768px) and (max-width: 1024px) {
     #ccid {
-        width: 180px;
+        width: fit-content;
+        height: fit-content;
     }
 }

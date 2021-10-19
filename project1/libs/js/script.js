@@ -36,7 +36,7 @@ $(document).ready(function(){
 					$("#ccid").html($("#ccid option").sort(function (a, b) {
 						return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
 					}))
-				 }
+				 } 
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				// your error code
@@ -68,6 +68,8 @@ $(document).ready(function(){
 							if(result.status.name == "ok") {
 								//console.log(JSON.stringify(result));
 								var cname = result.data[0].components.country;
+								
+								//$("<option></option>").text(cname).appendTo($("#ccid option:selected"));
 								console.log(cname);
 								$.ajax({
 									url: "libs/php/airport.php",
@@ -118,6 +120,8 @@ $(document).ready(function(){
 					//console.log(JSON.stringify(result));
 					if(result.status.name == "ok") {
 						isoCode = result['data'];
+						//$("#ccid option[value='isoCode']").prop('selected', true);
+						$('#ccid').val(isoCode);
 						console.log(isoCode);
 						//EXTRACTING DATA OF COUNTRY
 						$.ajax({
@@ -441,7 +445,7 @@ $(document).ready(function(){
 			}
 		}); 
 	});
-	var mymap = L.map('mapid').locate({setView: true, maxZoom: 19});
+	var mymap = L.map('mapid').locate({setView: true, maxZoom: 9});
 	Esri_NatGeoWorldMap.addTo(mymap);
 
 	//ADDING SIDEBAR TO THE MAP
