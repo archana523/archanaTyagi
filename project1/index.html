@@ -21,30 +21,171 @@
 	</head>
 
 	<body>
-		<div id=”preloader”></div>
-		<div class="container-fluid text-center">
-				<h2 class="gaz">GAZETTEER</h2>
-				<select id="ccid" name="cid" aria-label="State" class="form-select" aria-label="Default select example">
-				</select>
-				<button id="submitWeather" class="btn btn-primary">Submit</button>
+		
+			<div class="container" id="head">
+				<div class="row">
+					<div class="col-sm-6">
+						<h3 id="gaz">GAZETTEER</h3>
+					</div>
+					<div class="col-sm-6" id="select">
+						<select id="ccid" name="cid" aria-label="State" class="form-select" aria-label="Default select example">
+						</select>
+					</div>				
+				</div>
+			</div>
 			<div id="mapid">
 			</div>
+			<!-- MODAL FOR WEATHER REPORT -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				  <div class="modal-content" id="modal">
+					<div class="modal-header">
+					  <h5 class="modal-title" id="label"></h5>
+					  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+					  <div class="container">
+						<div class="row">
+							<div class="col-sm-4" id="today">
+								<p>Today</p>
+								<p class="minValues" id="day1Min"></p>
+							</div>
+							<div class="col-sm-4" id="dest">
+								<p class="weatherd" id="des"></p>
+							</div>
+							<div class="col-sm-4" id="imgt">
+								<span class="image" id="img1"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+							<p class="weather" id="day2"></p>
+							<span class="image" id="img2"></span>
+							<p class="minValues" id="day2Min">load....</p>
+							<!-- <p class="maxValues" id="day2Max">load....</p> -->
+							</div>
+						
+							<div class="col-sm-3">
+							<p class="weather" id="day3"></p>
+							<span class="image" id="img3"></span>
+							<p class="minValues" id="day3Min">load....</p>
+							<!-- <p class="maxValues" id="day3Max">load....</p> -->
+							</div>
+						
+						
+							<div class="col-sm-3">
+							<p class="weather" id="day4"></p>
+							<span class="image" id="img4"></span>
+							<p class="minValues" id="day4Min">load....</p>
+							<!-- <p class="maxValues" id="day4Max">load....</p> -->
+							</div>
+						
+							<div class="col-sm-3">
+							<p class="weather" id="day5"></p>
+							<span class="image" id="img5"></span>
+							<p class="minValues" id="day5Min">load....</p>
+							<!-- <p class="maxValues" id="day5Max">load....</p> -->
+							</div>
+						</div>
+					  </div>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				  </div>
+				</div>
+			  </div>
 			<div id="sidebar">
-				<h4>Country Information</h4>
-				<h5>Capital: <span id="cap"></span></h5>
-				<h5>Region: <span id="reg"></span></h5>
-				<h5>Population: <span id="pop"></span></h5>
-				<h5>Native Name: <span id="nat"></span></h5>
-				<h5>Subregion: <span id="sub"></span></h5>
-				<h5>Currency: <span id="cur"></span></h5>
-				<h5>Currency Symbol: <span id="curs"></span></h5>
-				<h5>Area: <span id="area"></span></h5>
+				<h4 id="coun"></h4>
+				<h5><span id="flag"></span></h5>
+				<hr>
+				<h5>Capital City: <span id="cap"></span></h5>
+				<h5>Currency: <span id="cur"></span> <span class="bold">(<span id="curs"></span>)</span></h5>
+				<h5>Area: <span id="area"></span> <span class="bold">km<sup>2</sup></span></h5>
 				<h5>Language: <span id="lang"></span></h5>
-				<h5>Timezones: <span id="tim"></span></h5>
-				<h5>Flag: <span id="flag"></span></h5>
+				<h5>Population: <span id="pop"></span></h5>
+				<h5>Region: <span id="reg"></span></h5>
+				<hr>
+				<h4>Currency Exchange rate</h4>
+				<h5 id="result"></h5>
+				<h5 class="currencyName"></h5>
+				<h6>Enter amount of <span class="currencyName"></span></h6>
+				<input id="currencyInput" class="form-control" type="number" min="0" value=0>
+				<h6>Select currency to convert to:</h6>
+				<div id="curDrop"><select id="currencyName" name="currency" aria-label="State" class="form-select" aria-label="Default select example"></select></div>
+				<h5 id="result"></h5>
+				<hr>
+				<h4>Wikipedia Links</h4>	
+				<h6 id="tit1"></h6>
+				<p id="summ1"></p>
+				<h6 id="tit2"></h6>
+				<p id="summ2"></p>
+				<h6 id="tit3"></h6>
+				<p id="summ3"></p>
+				<hr>
+				<h4>News Article</h4>	
+				<h6 id="art1"></h6>
+				<p id="des1"></p>
+				<h6 id="art2"></h6>
+				<p id="des2"></p>
+				<h6 id="art3"></h6>
+				<p id="des3"></p>
 			</div>
-			
-		</div>
+			<!-- MODAL FOR COVID REPORT ----------------------------------------------------------------->
+			<div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				  <div class="modal-content" id="modal1">
+					<div class="modal-header" id="header1">
+					  <h5 class="modal-title" id="label1"></h5>
+					  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+					  <div class="container">
+						<div class="row">
+							<!-- <div class="col-sm-4" id="today1">
+								<p>Today</p>
+								<p class="minValues" id="day1Min"></p>
+							</div> -->
+							<div class="col-sm-6" id="case">
+								<p id="tot">Total Cases</p>
+							</div>
+							<div class="col-sm-6" id="rec">
+								<p id="reco"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6" id="case1">
+								<p id="tot1">Total Recovered</p>
+							</div>
+							<div class="col-sm-6" id="rec1">
+								<p id="reco1"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6" id="case2">
+								<p id="tot2">Total Deaths</p>
+							</div>
+							<div class="col-sm-6" id="rec2">
+								<p id="reco2"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6" id="case3">
+								<p id="tot3">Critical</p>
+							</div>
+							<div class="col-sm-6" id="rec3">
+								<p id="reco3"></p>
+							</div>
+						</div>
+					  </div>
+					</div>
+					<!-- <div class="modal-footer">
+					  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div> -->
+				  </div>
+				</div>
+			  </div>
+			<div id="preloader"></div>
 		<script src="vendors/js/leaflet.js"></script>
 		<script src="vendors/js/leaflet-providers.js"></script>
 		<script src="vendors/js/easy-button.js"></script>
