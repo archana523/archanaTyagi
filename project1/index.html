@@ -30,7 +30,7 @@
 					<div class="col-sm-6" id="select">
 						<select id="ccid" name="cid" aria-label="State" class="form-select" aria-label="Default select example">
 						</select>
-					</div>				
+					</div>
 				</div>
 			</div>
 			<div id="mapid">
@@ -122,14 +122,6 @@
 				<p id="summ2"></p>
 				<h6 id="tit3"></h6>
 				<p id="summ3"></p>
-				<hr>
-				<h4>News Article</h4>	
-				<h6 id="art1"></h6>
-				<p id="des1"></p>
-				<h6 id="art2"></h6>
-				<p id="des2"></p>
-				<h6 id="art3"></h6>
-				<p id="des3"></p>
 			</div>
 			<!-- MODAL FOR COVID REPORT ----------------------------------------------------------------->
 			<div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -142,10 +134,6 @@
 					<div class="modal-body">
 					  <div class="container">
 						<div class="row">
-							<!-- <div class="col-sm-4" id="today1">
-								<p>Today</p>
-								<p class="minValues" id="day1Min"></p>
-							</div> -->
 							<div class="col-sm-6" id="case">
 								<p id="tot">Total Cases</p>
 							</div>
@@ -179,13 +167,89 @@
 						</div>
 					  </div>
 					</div>
-					<!-- <div class="modal-footer">
-					  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					</div> -->
+				</div>
+			</div>
+		</div>
+			<!-- MODAL FOR NEWS REPORT ----------------------------------------------------------------->
+			<div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				  <div class="modal-content" id="modal21">
+					<div class="modal-header" id="header2">
+					  <h5 class="modal-title" id="label2"></h5>
+					  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+					  <div class="container">
+						<div class="row">
+							<div class="col-sm-12" id="news1">
+								<p id="art1"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12" id="news2">
+								<p id="art2"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12" id="news3">
+								<p id="art3"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12" id="news4">
+								<p id="art4"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12" id="news5">
+								<p id="art5"></p>
+							</div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+		<!-- MODAL FOR IMAGE DISPLAY------------------------------------------------------------- -->
+		<div class="modal fade" id="modal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <div class="modal-content" id="modal31">
+				<div class="modal-header" id="header3">
+				  <h5 class="modal-title" id="label3"></h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+				  <div class="container">
+					<div class="row">
+						<div class="col-sm-6" id="imgi1">
+							<p id="link1"></p>
+						</div>
+						<div class="col-sm-6" id="imgi2">
+							<p id="link2"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6" id="imgi3">
+							<p id="link3"></p>
+						</div>
+						<div class="col-sm-6" id="imgi4">
+							<p id="link4"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6" id="imgi5">
+							<p id="link5"></p>
+						</div>
+						<div class="col-sm-6" id="imgi6">
+							<p id="link6"></p>
+						</div>
+					</div>
 				  </div>
 				</div>
 			  </div>
-			<div id="preloader"></div>
+			</div>
+		</div>
+		<div id="preloader"></div>
 		<script src="vendors/js/leaflet.js"></script>
 		<script src="vendors/js/leaflet-providers.js"></script>
 		<script src="vendors/js/easy-button.js"></script>
