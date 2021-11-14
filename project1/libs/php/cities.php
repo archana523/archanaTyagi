@@ -7,18 +7,21 @@
 
 	$executionStartTime = microtime(true);
 
-	$url='https://countriesnow.space/api/v0.1/countries';
+	$url='https://wft-geo-db.p.rapidapi.com/v1/geo/cities?countryIds=IN';
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_URL,$url);
-
-	$result=curl_exec($ch);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+		"x-rapidapi-host: wft-geo-db.p.rapidapi.com",
+		"x-rapidapi-key: 9ad31eb67cmshc89b947bd7eb749p1a77b5jsn848a9313fb3e"
+	]);
+	$data1=curl_exec($ch);
 
 	curl_close($ch);
 
-	$decode = json_decode($result,true);	
+	$decode = json_decode($data1,true);	
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";

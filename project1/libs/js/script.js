@@ -31,6 +31,12 @@ var img;
 var p;
 var url;
 var detail;
+var easy_button2;
+var detail;
+var blueMarker;
+var name3;
+var placename;
+var easy_button3;
 $(window).on('load', function () 
 	{if ($('#preloader').length)
 		 {$('#preloader').delay(1000).fadeOut('slow',function () {$(this).remove();
@@ -70,42 +76,80 @@ $(document).ready(function(){
 					lng = position.coords.longitude;
 					latlon = encodeURIComponent([position.coords.latitude, position.coords.longitude]);
 					console.log(latlon);
-				//GETTING CODE OF COUNTRY-------------------------------------------------------------------
-			  	$.ajax({
-				  url:"libs/php/geoNames.php",
-				  type: 'POST',
-				  dataType: 'json',
-				  data: {
-					lat: lat,
-					lng: lng,
-				  },
-					success: function(result) {
-					if(result.status.name == "ok") {
-						isoCode = result['data'];
-						$('#ccid').val(isoCode);
-                        mainMap();
-                    }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-	            	console.log('error while selecting currency Rate ');
-	 				}
+					geocode();
 				});
-            }
-        )}
-    }
-};
+        	}
+    	} else {
+			lat = 20.5937;
+			lng = 78.9629;
+			latlon = encodeURIComponent([lat, lng]);
+			geocode();
+			}
+		};
+	function geocode() {
+						//GETTING CODE OF COUNTRY-------------------------------------------------------------------
+						$.ajax({
+							url:"libs/php/geoNames.php",
+							type: 'POST',
+							dataType: 'json',
+							data: {
+							  lat: lat,
+							  lng: lng,
+							},
+							  success: function(result) {
+							  if(result.status.name == "ok") {
+								  isoCode = result['data'];
+								  $('#ccid').val(isoCode);
+								  mainMap();
+							  }
+							  },
+							  error: function(jqXHR, textStatus, errorThrown) {
+							  console.log('error while selecting currency Rate ');
+							   }
+						  });
+	}
     
     $('#ccid').change(mainMap);//WHEN USER SELECTS COUNTRY FROM DROPDOWN LIST
 
-	 //FUNCTION FOR DISPLAYING DATA OF REQUIRED COUNTRY--------------------------------------------------------
+	 // Main FUNCTION FOR DISPLAYING DATA OF REQUIRED COUNTRY--------------------------------------------------------
 	function mainMap () {
                 $('#result').html(' ');
                 $('#currencyInput').val("");
                 $('#currencyName').val("");
                 
-				var placename = encodeURIComponent($("#ccid option:selected").html());
+				placename = encodeURIComponent($("#ccid option:selected").html()+' places');
 				console.log(placename);
-                console.log($('#ccid').val());
+				//AJAX FOR DISPLAYING IMAGES---------------------------------------------------------------------------
+				$.ajax({
+					url:"libs/php/images.php",
+					type:'POST',
+					dataType: 'json',
+					data: {
+						country: placename,
+					},
+					success: function(result) {
+						console.log(JSON.stringify(result));
+						if(result.status.name == "ok"){
+							console.log(result.data[1].thumbnails[0].url);
+							var imgi;
+							$('#header3').html('Images of Famous Place in '+ $("#ccid option:selected").html());
+							for(var i=0; i<6; i++){
+								imgi = result.data[i].thumbnails[0].url;
+								console.log(imgi);
+								//$('#link'+ (i+1)).html(`<img src='${imgi}' width="190" height="100">`)
+								$('#link' + (i+1)).html('<a href="' + result.data[i].page + '"target="_blank" rel="noopener">' + `<img src='${imgi}' width="190" height="100">` + '</a>')
+							}
+							if(easy_button3 != null){ mymap.removeControl(easy_button3);}
+						easy_button3 = L.easyButton('<i class="fa fa-image" style="font-size:18px;color:red"></i>', function(btn, map){
+						$('#modal3').modal('show');
+						}).addTo(mymap);
+						}
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+                        // your error code
+                        console.log('error while selecting currency from dropdown list');
+                    }
+				})
 				if(m != null){
 							mymap.removeLayer(m);
 							markerCluster.removeLayer(m)
@@ -117,7 +161,6 @@ $(document).ready(function(){
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
-                        console.log(JSON.stringify(result['data'][7]['currencies'][0]['code']));
                         var usedNames = [];
                         var usedCode = [];
                         for (var i = 0; i < result['data'].length; i++) {
@@ -149,7 +192,6 @@ $(document).ready(function(){
                                             amount: $('#currencyInput').val(),
                                         },
                                         success: function(result){
-                                            console.log(JSON.stringify(result));
                                             if(result.status.name == "ok") {
                                                 if($('#currencyInput').val() == 0){
                                                     return 0;
@@ -176,24 +218,13 @@ $(document).ready(function(){
                         console.log('error while selecting currency from dropdown list');
                     }
                 });	
-				$.ajax({
-					url: "libs/php/geolocationSearch.php",
-					type: 'POST',
-					dataType: 'json',
-					data: {
-						placename: placename
-					},
-					success: function(result) {
-						if(result.status.name == "ok") {
-							console.log(JSON.stringify(result));
-							cname = result.data[0].components.country;
-							console.log(cname);
+				//AIRPORT DATA EXTRACTION AND DISPLAY------------------------------------------------------------------
 							$.ajax({
 								url: "libs/php/airport.php",
 								type: 'POST',
 								dataType: 'json',
 								success: function(result){
-									//console.log(JSON.stringify(result));
+									console.log(JSON.stringify(result.data['data']));
 									markerCluster = L.markerClusterGroup();
 									var redMarker = L.ExtraMarkers.icon({
 										icon: 'fa-map-marker',
@@ -202,14 +233,13 @@ $(document).ready(function(){
 										prefix: 'fa'
 									});
 									if(result.status.name == "ok"){
+										console.log(result.data[0]);
 										for(var i=0; i<result.data.length; i++){
-											if(result.data[i].country === cname) {
-												
-												m = L.marker([result.data[i].lat, result.data[i].lon], {icon: redMarker}).bindPopup(result.data[i].name);
+											if(result.data[i].country == $('#ccid').val()){
+												m = L.marker([result.data[i].latitude, result.data[i].longitude], {icon: redMarker}).bindPopup(result.data[i].name);
 												markerCluster.addLayer(m);
 												mymap.addLayer(markerCluster);
 											}
-											
 										}
 									}
 								},
@@ -218,13 +248,6 @@ $(document).ready(function(){
 									console.log('error applying clustering using countries data');
 								}
 							});
-						}
-					},
-					error: function(jqXHR, textStatus, errorThrown) {
-						// your error code
-						console.log('Geolocation error');
-					}
-				});
 				console.log($('#ccid').val());
 			$.ajax({
 			url: "libs/php/getCountryInfo1.php",
@@ -237,7 +260,6 @@ $(document).ready(function(){
 			success: function(result) {
 				if (result.status.name == "ok") {
 					code2 = result['data']['alpha2Code'];
-					
 					//INFORMATION ABOUT COUNTRY
 					$('#pop').html((result['data']['population']).toLocaleString());
 					$('#cap').html(result['data']['capital']);
@@ -250,33 +272,36 @@ $(document).ready(function(){
 					
 					flag = result['data']['flag'];
 					$('#flag').html(`<img src='${flag}' width="90" height="80">`);
-					//console.log('hey');
-					
 					mymap.setView(result['data']['latlng']);
 					
 					//ADDING MARKER TO MAP
 					 name2 = result['data']['capital'];
-					 var name = encodeURIComponent(result['data']['capital']);
-					//console.log(name);
+					 name3 = encodeURIComponent(result['data']['capital']);
+					//ADDING WIKIPEDIA LINKS OF COUNTRY
 					$.ajax({
 						url: "libs/php/wikipedia.php",
 						type: 'POST',
 						dataType: 'json',
 						contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
 						data: {
-							q: name
+							q: name3
 						},
 						success: function(result){
+							console.log(JSON.stringify(result));
 								if(result.status.name == "ok"){
-									j=1;
+									j = 1;
+									for(var k=1; k<4; k++){
+										$('#tit' + k).html('No record found!!!');
+										$('#summ' + k).html('No record found!!!');
+									}
 									for(var i=0; i<result['data'].length; i++){
 										if(result['data'][i]['countryCode'] == code2){
-											var detail = result['data'][i]['title'];
-															console.log(i);
-															$('#tit'+ (j)).html('<a href="' +'https://'+ result['data'][i]['wikipediaUrl'] + '"target="_blank" rel="noopener">' + detail + '</a>');
-															$('#summ' + (j)).html(result['data'][i]['summary']);
-															j++;
-											var blueMarker = L.ExtraMarkers.icon({
+											detail = result['data'][i]['title'];
+											console.log(i);
+											$('#tit'+ (j)).html('<a href="' +'https://'+ result['data'][i]['wikipediaUrl'] + '"target="_blank" rel="noopener">' + detail + '</a>');
+											$('#summ' + (j)).html(result['data'][i]['summary']);
+											j++;
+											blueMarker = L.ExtraMarkers.icon({
 												icon: 'fa-map-marker',
 												markerColor: 'blue',
 												shape: 'square',
@@ -294,29 +319,32 @@ $(document).ready(function(){
 						console.log('hey');
 						}
 					});
-					//EXTRACTING INFO ABOUT NEWS ARTICLE
+					//EXTRACTING INFO ABOUT NEWS ARTICLE----------------------------------------------------------------
 					$.ajax({
 						url:"libs/php/newsArticle.php",
 						type: 'POST',
 						dataType: 'json',
 						data: {
-							country: $('#ccid').val(),
+							code: $('#ccid').val(),
 						},
 						success: function(result) {
+							console.log(JSON.stringify(result.data['status']));
 							if(result.status.name == "ok") {
-                                if(result['data'].length == 0){
-                                    for(var j=0; j<3; j++){
-                                        $('#art' + (j+1)).html("No Records Available");
-                                        $('#des' + (j+1)).html("No Records Available");
-                                    }
-                                } else {
-                                    for(var i=0; i<3; i++){
-                                        detail1 = result['data'][i]['title'];
-                                       $('#art'+ (i+1)).html('<a href="'+ result['data'][i]['url'] + '"target="_blank" rel="noopener">' + detail1 + '</a>');
-                                       $('#des' + (i+1)).html(result['data'][i]['description']);
-                                   }
-                                }
-
+								$('#header2').html('Latest Headlines of ' + $("#ccid option:selected").html());
+								if(result.data['status'] != "ok") {
+									for(var j =0; j<5; j++){
+										$('#news' + (j+1)).html('SORRY NO NEWS RECORD FOUND!!!!')
+									}
+								}
+								else {
+									for(var i=0; i<5; i++){
+										$('#news'+ (i+1)).html('<a href="' + result.data['articles'][i]['link'] + '"target="_blank" rel="noopener">'+ result.data['articles'][i]['title']+'</a>')
+									}
+								}
+								if(easy_button2 != null){ mymap.removeControl(easy_button2);}
+								easy_button2 = L.easyButton('<i class="fa fa-list-alt" style="font-size:18px;color:green"></i>', function(btn, map){
+							   	$('#modal2').modal('show');
+						   }).addTo(mymap);
 							}
 						},
 						error: function(jqXHR, textStatus, errorThrown) {
@@ -324,18 +352,16 @@ $(document).ready(function(){
 							console.log('hey');
 							}
 					});
-					
-					//INFORMATION ABOUT WEATHER
+					//INFORMATION ABOUT WEATHER------------------------------------------------------------------------
 								$.ajax({
 										url: "libs/php/openWeatherCity.php",
 										type: 'POST',
 										dataType: 'json',
 										data: {
-										q: name,
+										q: name3,
 										},
 										success: function(data1) {
 										if (result.status.name == "ok"){
-											console.log(data1['data']['list'][0]['weather'][0]['icon']);
 											for(var i=0; i< 5; i++){
 												$("#day" + (i+1) +"Min").html(Number(data1['data']['list'][i]['main']['temp_min']).toFixed(1)+"°"+"C");
 											}
@@ -368,7 +394,6 @@ $(document).ready(function(){
 														return day + d.getDay();
 													}
 												}
-
 													for(i = 0; i<5; i++){
 														$("#day" + (i+1)).html(weekday[CheckDay(i)]);
 													}
@@ -394,10 +419,8 @@ $(document).ready(function(){
 			type: 'POST',
 			dataType: 'json',
 			success: function(data){
-				//console.log(result.data.countryInfo.features[0])
 			for(var i=0; i<data['data'].length; i++){
 				if(data['data'][i]['code'] === $('#ccid').val()){
-					//console.log(result.data.countryInfo.features[i].properties.iso_a2);
 					if(polygon != null) {
 						mymap.removeLayer(polygon);
 					}
@@ -405,7 +428,6 @@ $(document).ready(function(){
 						return {color: feature.blue};
 				   }
 				   }).addTo(mymap);
-					//console.log(result.data.countryInfo.features[i]);
 					mymap.fitBounds(polygon.getBounds());
 				};
 			};
@@ -424,7 +446,6 @@ $(document).ready(function(){
                 code: $('#ccid').val(),
             },
             success: function(result) {
-                console.log(result['data'][0]['confirmed']);
                 if(result.status.name == "ok"){
                     $('#label1').html($("#ccid option:selected").html()+ ', Covid Statistics');
                     $('#reco').html(result['data'][0]['confirmed'].toLocaleString());
@@ -434,7 +455,6 @@ $(document).ready(function(){
                     if(easy_button1 != null){ mymap.removeControl(easy_button1);}
 						easy_button1 = L.easyButton('<i class="fa fa-heartbeat" style="font-size:18px;color:red"></i>', function(btn, map){
 						$('#modal1').modal('show');
-						//popup.setLatLng(mymap.getCenter()).openOn(mymap);
 						}).addTo(mymap);
                 } 
             }
@@ -451,8 +471,6 @@ $(document).ready(function(){
 	L.easyButton('<i class="fa fa-info-circle" style="font-size:18px;color:green"></i>', function(){
 	sidebar.toggle();
 	}).addTo(mymap);
-	//L.control.scale().addTo(mymap);
-	
 		//ADDING BASEMAPS
 		baseMaps = {
 		"OpenStreetMap": OpenStreetMap_Mapnik,

@@ -7,14 +7,14 @@
 
 	$executionStartTime = microtime(true);
 
-	$url='https://newscatcher.p.rapidapi.com/v1/latest_headlines?lang=en&country='.$_REQUEST['code'].'&media=True';
-	
+	$url='https://google-image-search1.p.rapidapi.com/?keyword='.$_REQUEST['country'].'&max=10';
+
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_URL,$url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-		"x-rapidapi-host: newscatcher.p.rapidapi.com",
+		"x-rapidapi-host: google-image-search1.p.rapidapi.com",
 		"x-rapidapi-key: 9ad31eb67cmshc89b947bd7eb749p1a77b5jsn848a9313fb3e"
 	]);
 	$data1=curl_exec($ch);
