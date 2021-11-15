@@ -132,7 +132,7 @@ $(document).ready(function(){
 						if(result.status.name == "ok"){
 							console.log(result.data[1].thumbnails[0].url);
 							var imgi;
-							$('#header3').html('Images of Famous Place in '+ $("#ccid option:selected").html());
+							$('#label3').html('Images of Famous Place in '+ $("#ccid option:selected").html());
 							for(var i=0; i<6; i++){
 								imgi = result.data[i].thumbnails[0].url;
 								console.log(imgi);
@@ -330,7 +330,7 @@ $(document).ready(function(){
 						success: function(result) {
 							console.log(JSON.stringify(result.data['status']));
 							if(result.status.name == "ok") {
-								$('#header2').html('Latest Headlines of ' + $("#ccid option:selected").html());
+								$('#label2').html('Latest Headlines of ' + $("#ccid option:selected").html());
 								if(result.data['status'] != "ok") {
 									for(var j =0; j<5; j++){
 										$('#news' + (j+1)).html('SORRY NO NEWS RECORD FOUND!!!!')

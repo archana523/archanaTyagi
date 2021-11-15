@@ -139,6 +139,9 @@ h4{
     text-align: center;
     background-color: rgb(245, 233, 69);
 }
+#weat {
+    margin-top: 10px;
+}
 #header1{
     background-color: rgb(248, 82, 53);
 }
@@ -161,6 +164,9 @@ h4{
 }
 #news4 {
     background-color: rgb(184, 212, 196);
+}
+#newsBody{
+    background-color: rgb(245, 233, 69);
 }
 .modal-body{
     padding:0px;
