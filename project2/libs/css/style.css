@@ -1,0 +1,55 @@
+.tab-content>.active {
+    display: flex;
+}
+#add-btn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 45px;
+}
+#add-btn2 {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 80px;
+    margin-bottom: 10px;
+    width: 45px;
+}
+#add-btn1 {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 80px;
+    margin-bottom: 10px;
+    width: 45px;
+}
+#del-btn1 {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 45px;
+}
+#del-btn2 {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 45px;
+}
+/* #nav-tab {
+    position: fixed;
+} 
+ #nav-pers-tab, #nav-dept-tab, #nav-loc-tab {
+    position: fixed;
+} */
+/* #nav-id {
+    margin-top: 55px;
+} */
+#nav-head {
+    padding-bottom: 10px;
+}
