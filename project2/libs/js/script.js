@@ -6,10 +6,15 @@ var a = [];
 var locId = new Array();
 var b = [];
 var val1;
+var idd1;
+var id2;
 $(document).ready(function(){
-    //GETTING DETAILS FROM DEPARTMENT TABLE-----------------------------------------------------------------
     allPersonnel();
-    $.ajax({
+    allDepartment();
+    allLocation();
+    //GETTING DETAILS FROM DEPARTMENT TABLE-----------------------------------------------------------------
+    function allDepartment()
+    {$.ajax({
         url: "libs/php/getAllDepartments.php",
         type: 'POST',
         dataType: 'json',
@@ -21,9 +26,17 @@ $(document).ready(function(){
                         str1 += '<tr>';
                         str1 += '<td>' + result.data[i].name+ '</td>';
                         str1 += '<td>' + result.data[i].Location+ '</td>';
-                        str1 += '</tr>'
+                        str1 += '<td>'+ '<button type = "button" class="btn btn-primary but2" title="editd" data-bs-toggle="modal" data-bs-target="#editdd" id="t'+ i +'">'+'<i class="fas fa-edit"></i></button>' + '</td>';
+                        str1 += '</tr>';
                     }
                     $('#tables').html(str1);
+                    $('.but2').click(function() {
+                        var idd = this.id.substring(1);
+                        idd1 = result.data[idd].id;
+                        console.log(idd);
+                        $('#dept-edit').val(result.data[idd].name);
+                        $('#edit-dept').val(result.data[idd].locationID);
+                    })
                 for (var i = 0; i <result.data.length; i++) {
                     var elem = $("<option></option>");
                      elem.attr("value",result.data[i].id);
@@ -44,7 +57,7 @@ $(document).ready(function(){
 				// your error code
 				console.log('error while getting department data');
 			}
-     });
+     });}
      //TO GET ALL DEPARTMENT DETAILS WITH ID TO FILL THE INFORMATION ABOUT EMPLOYEE-----------------------
      function allPersonnel()
      {$.ajax({
@@ -130,31 +143,6 @@ $(document).ready(function(){
                     $('#add').modal('show');
                 });
             }
-            $('#formdd').on("submit", function(){
-                for(var i=0; i<a.length;i++){
-                    console.log(i);
-                    if(a[i] == $('#del-dep').val()){
-                        alert('data cant be deleted');
-                        break;
-                    } else {
-                        // alert('hey');
-                        $.ajax({
-                            url: "libs/php/deleteDepartmentByID.php",
-                            type: 'POST',
-                            data: {
-                                id: $('#del-dep').val(),
-                            },
-                            success: function(result){
-                                if(result.status.name == "ok"){
-                                    alert('Department deleted successfully');
-                                    setTimeout('window.location.reload();');
-                                }
-                            } 
-                        });
-                        break;
-                    }
-                }
-            });
         },
         error: function(jqXHR, textStatus, errorThrown) {
             // your error code
@@ -181,8 +169,16 @@ $(document).ready(function(){
             },
             success: function(result) {
                 if(result.status.name == "ok"){
-                    alert('Data has been updated');
-                    setTimeout('window.location.reload();');
+                    $('#edit').modal('hide');
+                    $('#msg').modal('show');
+                    $('#alert').html('Data updated');
+                    allPersonnel();
+                        $('#submit-edit').prop("disabled", true);
+                        $('#pers-edit-first').prop("disabled", true);
+                        $('#pers-edit-last').prop("disabled", true);
+                        $('#pers-edit-email').prop("disabled", true);
+                        $('#pers-edit-job').prop("disabled", true);
+                        $('#pers-edit-dep').prop("disabled", true);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -191,6 +187,47 @@ $(document).ready(function(){
             }
         })
     });
+    //EDITING DATA IN DEPARTMENT DATA..............................................................................
+    $('#formed').on("submit", function() {
+        $.ajax({
+            url: "libs/php/updateDepartment.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                name:$('#dept-edit').val(),
+                locationID: $('#edit-dept').val(),
+                id: idd1,
+            },
+            success: function(result) {
+                if (result.status.name == "ok"){
+                    $('#editdd').modal('hide');
+                    $('#msg').modal('show');
+                    $('#alert').html('Department data updated');
+                    allDepartment();
+                }
+            }
+        })
+    });
+    //EDITING DATA IN LOCATION DATA ..................................................................................
+         $('#formel').on("submit", function() {
+            $.ajax({
+                url: "libs/php/updateLocation.php",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    name:$('#loc-edit').val(),
+                    id: id2,
+                },
+                success: function(result) {
+                    if (result.status.name == "ok"){
+                        $('#editll').modal('hide');
+                        $('#msg').modal('show');
+                        $('#alert').html('Location data updated');
+                        allLocation();
+                    }
+                }
+            })
+        });
     //DELETING DATA FROM PERSONNEL DATABASE--------------------------------------------------------------------
     $('#del-btn').click(function() {    
         $.ajax({
@@ -201,8 +238,10 @@ $(document).ready(function(){
             },
             success: function(result) {
                 if(result.status.name == "ok"){
-                    alert('data has been deleted');
-                    setTimeout('window.location.reload();');
+                    $('#edit').modal('hide');
+                    $('#msg').modal('show');
+                    $('#alert').html('Data deleted');
+                    allPersonnel();
                 }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -212,7 +251,8 @@ $(document).ready(function(){
         });
     });  
     //GETTING DETAILS ABOUT LOCATIONS----------------------------------------------------------------------
-    $.ajax({
+    function allLocation()
+    {$.ajax({
         url: "libs/php/getAllLocations.php",
         type: 'POST',
         dataType: 'json',
@@ -222,12 +262,19 @@ $(document).ready(function(){
                 console.log(result);
                 for(var i=0; i<result.data.length; i++){
                     str2 += '<tr>' 
-                    str2 += '<td>'+ result.data[i].name + '</td>';
+                    str2 += '<td>'+ result.data[i].name + '</td>'
+                    str2 += '<td>'+ '<button type = "button" class="btn btn-primary but3" title="editp" data-bs-toggle="modal" data-bs-target="#editll" id="l'+ i +'">'+'<i class="fas fa-edit"></i></button>' + '</td>';
                     str2 += '</tr>'
                 }
                 $('#tables1').html(str2);
+                $('.but3').click(function() {
+                    var idp = this.id.substring(1);
+                    console.log(idp);
+                    id2 = result.data[idp].id;
+                    $('#loc-edit').val(result.data[idp].name);
+                })
                 for (var i = 0; i <result.data.length; i++) {
-                    locId.push(JSON.parse(result.data[i].id));
+                    //locId.push(JSON.parse(result.data[i].id));
                     var elem = $("<option></option>");
                      elem.attr("value",result.data[i].id);
                      elem.text(result.data[i].name);
@@ -236,45 +283,24 @@ $(document).ready(function(){
                      elem1.attr("value", result.data[i].id);
                      elem1.text(result.data[i].name);
                      elem1.appendTo($('#del-loc'));
+                     var elem3 = $("<option></option>");
+                      elem3.attr("value",result.data[i].id);
+                      elem3.text(result.data[i].name);
+                       elem3.appendTo($("#edit-dept"));
                 }
             }
-            console.log(locId);
-            $('#formll').on("submit", function(){
-                for(var i=0; i<locId.length;i++){
-                    if(locId[i] == $('#del-loc').val()){
-                        alert('data cant be deleted');
-                        break;
-                    } else {
-                        // alert('hey');
-                        $.ajax({
-                            url: "libs/php/deleteLocationById.php",
-                            type: 'POST',
-                            data: {
-                                id: $('#del-loc').val(),
-                            },
-                            success: function(result){
-                                alert('Location deleted successfully');
-                                if(result.status.name == "ok"){
-                                    alert('Location deleted successfully');
-                                    setTimeout('window.location.reload();');
-                                }
-                            } 
-                        });
-                        break;
-                    }
-                }
-            });
         },
         error: function(jqXHR, textStatus, errorThrown) {
             // your error code
             console.log('error while getting locations');
         }
-     });
-    //AJAX FOR INSERTING PERSONNEL DATA-----------------------------------------------------------------
+     });}
+    //AJAX FOR ADDING PERSONNEL DATA-----------------------------------------------------------------
     $('#formss').on("submit",function() {    
     $.ajax({
         url: "libs/php/insertPersonnel.php",
         type: 'POST',
+        dataType: 'json',
         data: {
             firstName: $('#pers-add-first').val(),
             lastName: $('#pers-add-last').val(),
@@ -285,8 +311,11 @@ $(document).ready(function(){
         success: function(result) {
             console.log('hey');
             if(result.status.name == "ok"){
-                alert('data has been inserted');
-                setTimeout('window.location.reload();');
+                $('#add').modal('hide');
+                $('#msg').modal('show');
+                $('#alert').html('Personnel data added');
+                $('#formss')[0].reset();
+                allPersonnel();
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -310,8 +339,12 @@ $(document).ready(function(){
             },
             success: function(result){
                 if(result.status.name == "ok"){
-                    alert('Department added successfully');
-                    setTimeout('window.location.reload();');
+                   $('#add-deptm').modal('hide');
+                   $('#msg').modal('show');
+                   $('#alert').html('Department added');
+                   $('#dept-add').val('');
+                   $('#add-dloc').html('');
+                   allDepartment();
                 }
             } 
         })
@@ -328,9 +361,13 @@ $(document).ready(function(){
                 name: $('#loc-add').val(),
             },
             success: function(result){
+                console.log($('#loc-add').val());
                 if(result.status.name == "ok"){
-                    alert('Location added successfully');
-                    setTimeout('window.location.reload();');
+                    $('#add-locm').modal('hide');
+                    $('#msg').modal('show');
+                    $('#alert').html('Location added successfuly');
+                    $('#loc-add').val('');
+                    allLocation();
                 }
             } 
         })
@@ -339,10 +376,86 @@ $(document).ready(function(){
     $('#del-btn1').click(function() {
         $('#del-deptm').modal('show');
     });
+    $('#formdd').on("submit", function(){
+        var idd = $('#del-dep').val();
+            $.ajax({
+                url: "libs/php/countDepartmentById.php",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: idd,
+                },
+                success: function(result) {
+                    if(result.status.name == "ok"){
+                        console.log(result.data[0].deptCount);
+                        if(result.data[0].deptCount == 0){
+                            $.ajax({
+                                url: "libs/php/deleteDepartmentByID.php",
+                                type: 'POST',
+                                data: {
+                                    id: idd,
+                                },
+                                success: function(result){
+                                    if(result.status.name == "ok"){
+                                        $('#del-deptm').modal('hide');
+                                        $('#msg').modal('show');
+                                        $('#alert').html('Department data deleted');
+                                        $("#del-dep").html('');
+                                        allDepartment();
+                                    }
+                                } 
+                            });
+                        } else {
+                            $('#del-deptm').modal('hide');
+                            $('#msg').modal('show');
+                            $('#alert').html('Department has Dependancy, Data cannot be deleted');
+                        }
+                    }
+                }
+            })
+    });
     //DELETING LOCATION----->
     $('#del-btn2').click(function() {
         $('#del-loctm').modal('show');
     });
+    console.log(locId);
+    $('#formll').on("submit", function(){
+        var idl = $('#del-loc').val();
+        $.ajax({
+            url: "libs/php/countLocationById.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id: idl,
+            },
+            success: function(result) {
+                if(result.status.name == "ok"){
+                    console.log(result.data[0].locCount);
+                    if(result.data[0].locCount == 0){
+                        $.ajax({
+                            url: "libs/php/deleteLocationById.php",
+                            type: 'POST',
+                            data: {
+                                id: idl,
+                            },
+                            success: function(result){
+                                $('#del-loctm').modal('hide');
+                                $('#msg').modal('show');
+                                $('#alert').html('Location data deleted');
+                                $('#del-loc').html('');
+                                allLocation();
+                            } 
+                        });
+                    } else {
+                        $('#del-loctm').modal('hide');
+                        $('#msg').modal('show');
+                        $('#alert').html('Location has Dependancy, Data cannot be deleted');
+                    }
+                }
+            }
+        });
+    });
+    //READING VALUES BEING ENTERED IN SEARCH INPUT---------------------------------------------------------
     $('#search-val').keyup(function(){
         var type = $(".active");
         var typeId = type[1].id;
@@ -356,6 +469,7 @@ $(document).ready(function(){
             searchDept();
         }
     });
+    //FUNCTION FOR SEARCHING LOCATION-------------------------------------------------------------------------------
     function searchLocation(){
         $.ajax({
             url: "libs/php/searchLocation.php",
@@ -381,6 +495,7 @@ $(document).ready(function(){
             },
         });
     }
+    //FUNCTION FOR SEARCHING PERSONNEL--------------------------------------------------------------------
     function searchPersonnel(){
        if($('#search-val').val() != '')
         {$.ajax({
@@ -421,6 +536,7 @@ $(document).ready(function(){
             allPersonnel();
         }
     }
+    //FUNCTION FOR SEARCHING DEPARTMENT---------------------------------------------------------------
     function searchDept(){
         $.ajax({
             url: "libs/php/searchDepartment.php",

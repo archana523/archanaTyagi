@@ -33,27 +33,6 @@
               </div>
             </div>
           </nav>
-        <!-- <header class="navbar navbar-dark bg-dark" id="nav-tab">
-            <a class="navbar-brand" href="">Company Directory</a>
-        </header> -->
-        <!-- <nav id="nav-id" class="sticky-top">
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                  <button class="nav-link active" id="nav-pers-tab" data-bs-toggle="tab" data-bs-target="#nav-pers" type="button" role="tab" aria-controls="nav-pers" aria-selected="true">Personnel</button>
-                  <button class="nav-link" id="nav-dept-tab" data-bs-toggle="tab" data-bs-target="#nav-dept" type="button" role="tab" aria-controls="nav-dept" aria-selected="false">Department</button>
-                  <button class="nav-link" id="nav-loc-tab" data-bs-toggle="tab" data-bs-target="#nav-loc" type="button" role="tab" aria-controls="nav-loc" aria-selected="false">Location</button>
-                </div>
-        </nav> -->
-
-              <!-- <div class="d-flex justify-content-center mb-3">
-                <form>
-                <div class="input-group">
-                    <input type="text" id="search-bar" class="form-control" placeholder="Search...">
-                </div>
-                </form>
-                <div class="input-group-append">
-                        <button type="button" id="search-btn" class="btn btn-dark" title="search"><i class="fas fa-search"></i></button>
-                    </div>
-            </div> -->
             <!-- TAB CONTENT OF PERSONNEL, DEPT AND LOCATION-------------------------- -->
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active row container-fluid " id="nav-pers" role="tabpanel" aria-labelledby="nav-pers-tab">
@@ -69,8 +48,8 @@
                     <tbody id ="tables">
                     </tbody>
                   </table>
-                  <button type = "button" id="add-btn1" class="btn btn-primary" title="add"> <i class="fas fa-plus"></i></button>;
-                  <button type = "button" id="del-btn1" class="btn btn-primary" title="add"> <i class="fas fa-trash"></i></button>;
+                  <button type = "button" id="add-btn1" class="btn btn-primary" title="add"> <i class="fas fa-plus"></i></button>
+                  <button type = "button" id="del-btn1" class="btn btn-primary" title="add"> <i class="fas fa-trash"></i></button>
                 </div>
                 <div class="tab-pane fade" id="nav-loc" role="tabpanel" aria-labelledby="nav-loc-tab">
                     <table class="table table-striped">
@@ -82,11 +61,11 @@
                         <tbody id ="tables1">
                         </tbody>
                     </table>
-                    <button type = "button" id="add-btn2" class="btn btn-primary" title="add"> <i class="fas fa-plus"></i></button>;
-                    <button type = "button" id="del-btn2" class="btn btn-primary" title="add"> <i class="fas fa-trash"></i></button>;
+                    <button type = "button" id="add-btn2" class="btn btn-primary" title="add"> <i class="fas fa-plus"></i></button>
+                    <button type = "button" id="del-btn2" class="btn btn-primary" title="add"> <i class="fas fa-trash"></i></button>
                 </div>
               </div>
-    <!-- EDIT MODAL-------------------------------------------------------------- -->
+    <!-- EDIT MODAL for PERSONNEL---------------------------------------------------------------------->
     <div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="edit" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -147,7 +126,7 @@
     <!-- ADD MODAL PERSONNEL------------------------------------------------------------------------------ -->
     <div class="modal fade" id="add" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="edit" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog">
-            <form id="formss">
+            <form id="formss" onsubmit="return false">
             <div class="modal-content">
                 <div class="modal-body">
                     <div id="add-pers">
@@ -189,10 +168,10 @@
         </form>
         </div>
     </div>
-    <!-- ADD DEPARTMENT MODAL------------------------------------------------------------------ -->
+    <!-- ADD DEPARTMENT MODAL------------------------------------------------------------------------>
     <div class="modal fade" id="add-deptm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form id="form1">
+            <form id="form1" onsubmit="return false">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">Add Department</h5>
@@ -223,7 +202,7 @@
       <!-- ADD LOCATION MODAL-------------------------------------------------------------- -->
       <div class="modal fade" id="add-locm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form id="form2">
+            <form id="form2" onsubmit="return false">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">Add Location</h5>
@@ -246,7 +225,7 @@
       <!-- DELETE DEPARTMENT MODAL---------------------------------------------------------------- -->
       <div class="modal fade" id="del-deptm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form id="formdd">
+            <form id="formdd" onsubmit="return false">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">Delete Department</h5>
@@ -273,7 +252,7 @@
       <!-- DELETE LOCATION MODAL ------------------------------------------------------------------->
       <div class="modal fade" id="del-loctm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form id="formll">
+            <form id="formll" onsubmit="return false">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Delete Location</h5>
@@ -297,6 +276,77 @@
         </form>
         </div>
       </div>
+      <!-- MODAL FOR ALERT MESSAGES------------------------------------------------------------ -->
+      <div class="modal fade" tabindex="-1" id="msg">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Message</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="alert"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- MODAL FOR UPDATING DEPARTMENT DATA--------------------------------------------------->
+      <div class="modal fade" id="editdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="formed" onsubmit="return false">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deptlabel">Edit Department</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col">
+                    <label for="dept-edit" class="form-label">Department *</label>
+                    <input id="dept-edit" type="text" aria-label="Department" class="form-control" required>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <label for="edit-dept" class="form-label">Location *</label>
+                        <select id="edit-dept" class="form-select" required>
+                            <option value="">select Location</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+            <!-- MODAL FOR UPDATING PERSONAL DATA--------------------------------------------------->
+            <div class="modal fade" id="editll" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form id="formel" onsubmit="return false">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="plabel">Edit Location</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col">
+                            <label for="loc-edit" class="form-label">Location *</label>
+                            <input id="loc-edit" type="text" aria-label="Department" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </div>
+                </form>
+                </div>
+              </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="vendors/js/bootstrap.min.js"></script>
         <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
