@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="libs/css/style.css">
     </head>
     <body>
-        <!-- NAVIGATION BAR WITH STICKY TOP--------------------------------------------------- -->
+        <!-- NAVIGATION BAR WITH STICKY TOP----------------------------------------------------->
         <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" id="nav-head">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Company Directory</a>
@@ -28,7 +28,8 @@
                   </div>
                 <form class="d-flex" onsubmit="return false">
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-val">
-                  <!-- <button class="btn btn-outline-success" type="submit" id="search-bot">Search</button> -->
+                   <button class="btn btn-primary" type="button" id="filter"><i class="fas fa-filter"></i></button>
+                  <button class="btn btn-primary" type="button" id="refresh"><i class="fas fa-sync"></i></button>
                 </form>
               </div>
             </div>
@@ -36,6 +37,7 @@
             <!-- TAB CONTENT OF PERSONNEL, DEPT AND LOCATION-------------------------- -->
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active row container-fluid " id="nav-pers" role="tabpanel" aria-labelledby="nav-pers-tab">
+                 
                 </div>
                 <div class="tab-pane fade" id="nav-dept" role="tabpanel" aria-labelledby="nav-dept-tab">
                     <table class="table table-striped">
@@ -347,6 +349,37 @@
                 </form>
                 </div>
               </div>
+      <!--MODAL FOR SEARCHING PERSONNEL USING DEPARTMENT AND LOCATION----------------------------------------------------->
+      	<div class="modal fade" id="filter-dl" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticdl"><button id="depf-btn" type="button" class="btn btn-primary btn-sm me-3">Department</button><button id="locf-btn" type="button" class="btn btn-primary btn-sm me-3">Location</button></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col" id="filter-dep">
+                    <label for="filter-dep1" class="form-label">Department</label>
+                    <select id="filter-dep1" class="form-select" required>
+                            <option value="">select Department</option>
+                        </select>
+                </div>
+                <div class="row mb-2">
+                    <div class="col" id="filter-loc">
+                        <label for="filter-loc1" class="form-label">Location</label>
+                        <select id="filter-loc1" class="form-select" required>
+                            <option value="">select Location</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="subb">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="vendors/js/bootstrap.min.js"></script>
         <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
