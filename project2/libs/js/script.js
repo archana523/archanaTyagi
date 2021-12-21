@@ -12,6 +12,149 @@ $(document).ready(function(){
     allPersonnel();
     allDepartment();
     allLocation();
+    $('#refresh').click(function() {
+    	allPersonnel();
+     })
+  	$('#nav-dept-tab').click(function(){
+    $('#filter').hide();
+     $('#refresh').hide();
+    })
+  	$('#nav-pers-tab').click(function(){
+    $('#filter').show();
+      $('#refresh').show();
+    })
+      	$('#filter-dep').hide();
+        $('#filter-loc').hide();
+  	$('#nav-loc-tab').click(function(){
+    	$('#filter').hide();
+      	$('#refresh').hide();
+    })
+  //FILTER PERSONNAL ON BASIS OF DEPARTMENT-------------------------------------------------------------------------------------------------
+  	$('#filter').click(function() {
+    	$('#filter-dl').modal('show');
+    })
+  	$('#depf-btn').click(function(){
+    	$('#filter-dep').show();
+          	$('#filter-loc').hide();	
+      $('#subb').click(function(){$.ajax({
+        	url: "libs/php/filterPersonnel",
+          	type: 'POST',
+          	dataType: 'json',
+          	success: function(result){
+              	var id = $('#filter-dep1').val();
+             	 var str = '';
+            	for(var i=0; i<result.data.length; i++){
+                  //console.log(result);
+                  if(result.data[i].deptid == id){
+                			var fn = result.data[i].firstName;
+                            var ln = result.data[i].lastName;
+                            var email = result.data[i].email;
+                            var jobTitle = result.data[i].jobTitle;
+                            var firstLetter = ln[0].toUpperCase();
+                  			str += '<div class = "col-sm-4" id="' + 'a' + i + '">';
+                            str += '<div class="row">';
+                            str += '<div class="col-sm-2 fs-5 fw-bold text-light " id="btn-container">' +
+                                '<button type="button"  class="btn rounded-circle btn-circle btn-md btn-primary but1" data-bs-toggle="modal" data-bs-target="#edit"  id="' + 'b' + i + '">' + fn[0] + ln[0] + '</button>' + '</div>';
+                            str += '<div class="col-sm-2 ">';
+                            str += '<div class="row fs-5 ">' + ln + ', ' + fn + '</div>';
+                            str += '<div class="row fs-6 fst-italic ">' + email + '</div>';
+                            str += '</div>';
+                            str += '</div>';
+                            str += '</div>';
+                  }
+                }
+              $('#nav-pers').html(str);
+              $('.but1').click(function(){
+                    id1 = this.id.substring(1);
+                    id = result.data[id1].id;
+                    $('#pers-edit-first').val(result.data[id1].firstName);
+                    $('#pers-edit-last').val(result.data[id1].lastName);
+                    $('#pers-edit-email').val(result.data[id1].email);
+                    $('#pers-edit-job').val(result.data[id1].jobTitle);
+                    $('#pers-edit-dep').val(result.data[id1].deptid);
+                });
+                $('#edit-btn').on('click',function(){
+                    $('#submit-edit').prop("disabled", false);
+                    $('#pers-edit-first').prop("disabled", false);
+                    $('#pers-edit-last').prop("disabled", false);
+                    $('#pers-edit-email').prop("disabled", false);
+                    $('#pers-edit-job').prop("disabled", false);
+                    $('#pers-edit-dep').prop("disabled", false);
+                })
+                $('#canc').on('click',function(){
+                    $('#pers-edit-first').prop("disabled", true);
+                    $('#pers-edit-last').prop("disabled", true);
+                    $('#pers-edit-email').prop("disabled", true);
+                    $('#pers-edit-job').prop("disabled", true);
+                    $('#pers-edit-dep').prop("disabled", true);
+                })
+            },
+        })
+      	 $('#filter-dl').modal('hide');
+       })
+     })
+    //FILTER PERSONNAL ON BASIS OF LOCATION--------------------------------------------------------------------------------------
+  	$('#locf-btn').click(function(){
+    	$('#filter-loc').show();
+        $('#filter-dep').hide();
+      	 $('#subb').click(function(){$.ajax({
+        	url: "libs/php/filterPersonnel",
+          	type: 'POST',
+          	dataType: 'json',
+          	success: function(result){
+              	var id = $('#filter-loc1').val();
+             	 var str = '';
+            	for(var i=0; i<result.data.length; i++){
+                  //console.log(result);
+                  if(result.data[i].locid == id){
+                			var fn = result.data[i].firstName;
+                            var ln = result.data[i].lastName;
+                            var email = result.data[i].email;
+                            var jobTitle = result.data[i].jobTitle;
+                            var firstLetter = ln[0].toUpperCase();
+                  			str += '<div class = "col-sm-4" id="' + 'a' + i + '">';
+                            str += '<div class="row">';
+                            str += '<div class="col-sm-2 fs-5 fw-bold text-light " id="btn-container">' +
+                                '<button type="button"  class="btn rounded-circle btn-circle btn-md btn-primary but1" data-bs-toggle="modal" data-bs-target="#edit"  id="' + 'b' + i + '">' + fn[0] + ln[0] + '</button>' + '</div>';
+                            str += '<div class="col-sm-2 ">';
+                            str += '<div class="row fs-5 ">' + ln + ', ' + fn + '</div>';
+                            str += '<div class="row fs-6 fst-italic ">' + email + '</div>';
+                            str += '</div>';
+                            str += '</div>';
+                            str += '</div>';
+                  }
+                }
+              $('#nav-pers').html(str);
+              $('.but1').click(function(){
+                    id1 = this.id.substring(1);
+                    id = result.data[id1].id;
+                    $('#pers-edit-first').val(result.data[id1].firstName);
+                    $('#pers-edit-last').val(result.data[id1].lastName);
+                    $('#pers-edit-email').val(result.data[id1].email);
+                    $('#pers-edit-job').val(result.data[id1].jobTitle);
+                    $('#pers-edit-dep').val(result.data[id1].deptid);
+                });
+                $('#edit-btn').on('click',function(){
+                    $('#submit-edit').prop("disabled", false);
+                    $('#pers-edit-first').prop("disabled", false);
+                    $('#pers-edit-last').prop("disabled", false);
+                    $('#pers-edit-email').prop("disabled", false);
+                    $('#pers-edit-job').prop("disabled", false);
+                    $('#pers-edit-dep').prop("disabled", false);
+                })
+                $('#canc').on('click',function(){
+                    $('#pers-edit-first').prop("disabled", true);
+                    $('#pers-edit-last').prop("disabled", true);
+                    $('#pers-edit-email').prop("disabled", true);
+                    $('#pers-edit-job').prop("disabled", true);
+                    $('#pers-edit-dep').prop("disabled", true);
+                })
+            },
+        })
+      	 $('#filter-dl').modal('hide');
+       })
+    })
+  	
     //GETTING DETAILS FROM DEPARTMENT TABLE-----------------------------------------------------------------
     function allDepartment()
     {$.ajax({
@@ -50,6 +193,10 @@ $(document).ready(function(){
                      elem2.attr("value",result.data[i].id);
                      elem2.text(result.data[i].name);
                       elem2.appendTo($("#del-dep"));
+                  var elem3 = $("<option></option>");
+                     elem3.attr("value",result.data[i].id);
+                     elem3.text(result.data[i].name);
+                      elem3.appendTo($("#filter-dep1"));
                   } 
             }
         },
@@ -58,7 +205,7 @@ $(document).ready(function(){
 				console.log('error while getting department data');
 			}
      });}
-     //TO GET ALL DEPARTMENT DETAILS WITH ID TO FILL THE INFORMATION ABOUT EMPLOYEE-----------------------
+     //TO GET ALL DEPARTMENT DETAILS WITH ID TO FILL THE INFORMATION ABOUT EMPLOYEE----------------------------------------------------------
      function allPersonnel()
      {$.ajax({
         url: "libs/php/getAll.php",
@@ -100,20 +247,13 @@ $(document).ready(function(){
                             str += '</div>';
                             str += '</div>';
                 }
-                console.log(depId[53]);
                 for(var i=0; i< depId.length; i++){
-                    //console.log(i);
                     if(a.indexOf(depId[i]) == -1){
-                        console.log(a.indexOf(depId[i]));
                         a.push(depId[i]);
                     }
                 };
-                console.log(a);
                 str += '<br><br><hr><h5> Total No.:  ' + len + '</h5><hr><br><br>';
                 str += '<button type = "button" id="add-btn" class="btn btn-primary" title="add"> <i class="fas fa-plus"></i></button>';
-                // <!-- ADD BUTTON POSITION FIXED------------------------------------------- -->
-                // <button type="button" id="add-btn" class="btn btn-primary" title="add"><i class="fas fa-plus circle"></i>
-                // </button>
                 $('#nav-pers').html(str);
                 $('.but1').click(function(){
                     id1 = this.id.substring(1);
@@ -168,7 +308,7 @@ $(document).ready(function(){
                 ID: id,
             },
             success: function(result) {
-                if(result.status.name == "ok"){
+              //  if(result.status.name == "ok"){
                     $('#edit').modal('hide');
                     $('#msg').modal('show');
                     $('#alert').html('Data updated');
@@ -179,7 +319,7 @@ $(document).ready(function(){
                         $('#pers-edit-email').prop("disabled", true);
                         $('#pers-edit-job').prop("disabled", true);
                         $('#pers-edit-dep').prop("disabled", true);
-                }
+               // }
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 // your error code
@@ -203,6 +343,7 @@ $(document).ready(function(){
                     $('#editdd').modal('hide');
                     $('#msg').modal('show');
                     $('#alert').html('Department data updated');
+                    $('#pers-edit-dep').html('');
                     allDepartment();
                 }
             }
@@ -223,7 +364,13 @@ $(document).ready(function(){
                         $('#editll').modal('hide');
                         $('#msg').modal('show');
                         $('#alert').html('Location data updated');
+                        $('#add-dloc').html('');
+                        $('#del-dep').html('');
+                      	$('#del-loc').html('');
+                        $('#pers-edit-dep').html('');
                         allLocation();
+                        allDepartment();
+                        allPersonnel();
                     }
                 }
             })
@@ -233,6 +380,7 @@ $(document).ready(function(){
         $.ajax({
             url: "libs/php/deletePersonnel.php",
             type: 'POST',
+          	dataType: 'json',
             data: {
                 id: id,
             },
@@ -287,6 +435,10 @@ $(document).ready(function(){
                       elem3.attr("value",result.data[i].id);
                       elem3.text(result.data[i].name);
                        elem3.appendTo($("#edit-dept"));
+                  var elem2 = $("<option></option>");
+                     elem2.attr("value",result.data[i].id);
+                     elem2.text(result.data[i].name);
+                      elem2.appendTo($("#filter-loc1"));
                 }
             }
         },
@@ -338,14 +490,16 @@ $(document).ready(function(){
                 locationID: $('#add-dloc').val(),
             },
             success: function(result){
-                if(result.status.name == "ok"){
+                //if(result.status.name == "ok"){
                    $('#add-deptm').modal('hide');
                    $('#msg').modal('show');
                    $('#alert').html('Department added');
-                   $('#dept-add').val('');
+                   $('#dept-add').html('');
                    $('#add-dloc').html('');
+              	   $('#del-dep').html('');
+                   $('#pers-edit-dep').html('');
                    allDepartment();
-                }
+                //}
             } 
         })
     })
@@ -362,13 +516,16 @@ $(document).ready(function(){
             },
             success: function(result){
                 console.log($('#loc-add').val());
-                if(result.status.name == "ok"){
+               // if(result.status.name == "ok"){
                     $('#add-locm').modal('hide');
                     $('#msg').modal('show');
                     $('#alert').html('Location added successfuly');
-                    $('#loc-add').val('');
+                    $('#loc-add').html('');
+              		$('#del-loc').html('');
+                    $('#add-dloc').html('');
                     allLocation();
-                }
+              	    allDepartment();
+                //}
             } 
         })
     })
@@ -396,13 +553,14 @@ $(document).ready(function(){
                                     id: idd,
                                 },
                                 success: function(result){
-                                    if(result.status.name == "ok"){
+                                    //if(result.status.name == "ok"){
                                         $('#del-deptm').modal('hide');
                                         $('#msg').modal('show');
                                         $('#alert').html('Department data deleted');
                                         $("#del-dep").html('');
+                                  		$('#pers-edit-dep').html('');
                                         allDepartment();
-                                    }
+                                   // }
                                 } 
                             });
                         } else {
@@ -443,6 +601,7 @@ $(document).ready(function(){
                                 $('#msg').modal('show');
                                 $('#alert').html('Location data deleted');
                                 $('#del-loc').html('');
+                                $('#add-dloc').html('');
                                 allLocation();
                             } 
                         });
