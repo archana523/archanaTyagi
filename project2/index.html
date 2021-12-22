@@ -28,8 +28,15 @@
                   </div>
                 <form class="d-flex" onsubmit="return false">
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-val">
-                   <button class="btn btn-primary" type="button" id="filter"><i class="fas fa-filter"></i></button>
-                  <button class="btn btn-primary" type="button" id="refresh"><i class="fas fa-sync"></i></button>
+
+                    <select id="filter-dep1" class="form-select">
+                            <option value="">Select Department</option>
+                        </select>
+
+                        <select id="filter-loc1" class="form-select">
+                            <option value="">Select Location</option>
+                        </select>
+                  <button type = "button" id="refresh" class="btn btn-primary" title="refresh"> <i class="fas fa-sync"></i></button>
                 </form>
               </div>
             </div>
@@ -176,7 +183,7 @@
             <form id="form1" onsubmit="return false">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">Add Department</h5>
+              <h5 class="modal-title" id="staticAdd">Add Department</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -207,7 +214,7 @@
             <form id="form2" onsubmit="return false">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">Add Location</h5>
+              <h5 class="modal-title" id="staticaddloc">Add Location</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -350,36 +357,7 @@
                 </div>
               </div>
       <!--MODAL FOR SEARCHING PERSONNEL USING DEPARTMENT AND LOCATION----------------------------------------------------->
-      	<div class="modal fade" id="filter-dl" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticdl"><button id="depf-btn" type="button" class="btn btn-primary btn-sm me-3">Department</button><button id="locf-btn" type="button" class="btn btn-primary btn-sm me-3">Location</button></h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="col" id="filter-dep">
-                    <label for="filter-dep1" class="form-label">Department</label>
-                    <select id="filter-dep1" class="form-select" required>
-                            <option value="">select Department</option>
-                        </select>
-                </div>
-                <div class="row mb-2">
-                    <div class="col" id="filter-loc">
-                        <label for="filter-loc1" class="form-label">Location</label>
-                        <select id="filter-loc1" class="form-select" required>
-                            <option value="">select Location</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="subb">Submit</button>
-            </div>
-          </div>
-        </div>
-      </div>
+  
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="vendors/js/bootstrap.min.js"></script>
         <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
